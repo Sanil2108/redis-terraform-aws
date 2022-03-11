@@ -1,0 +1,55 @@
+name: cicd
+on: [push]
+jobs:
+  build-services:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
+
+    - name: Build, tag and push cluster setup service
+      working-directory: ./services/cluster-setup
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: latest
+        CLUSTER_SETUP_REPOSITORY: cluster-setup
+      run: |
+        docker build -t $ECR_REGISTRY/$CLUSTER_SETUP_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$CLUSTER_SETUP_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$CLUSTER_SETUP_REPOSITORY:$IMAGE_TAG"
+
+    - name: Build, tag and push Redis node service
+      working-directory: ./services/redis-node
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: latest
+        REDIS_NODE_REPOSITORY: redis-node
+      run: |
+        docker build -t $ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG"
+
+  update-infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Init terraform
+
+    - name: Print terraform plan
+
+    - name: Apply the infrastructure
+
+    - name: Destroy the EC2 resources
+
+    - name: Create the EC2 resources
+
