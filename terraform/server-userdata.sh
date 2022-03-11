@@ -22,6 +22,7 @@ services:
     image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
     environment:
       - REDIS_PORT=6079
+
   replica0:
     network_mode: host
     image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
@@ -60,7 +61,7 @@ services:
 
   cluster-setup:
     network_mode: host
-    build: ./cluster-setup
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/cluster-setup:latest
     depends_on:
       - master0
       - master1
