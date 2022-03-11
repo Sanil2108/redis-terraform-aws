@@ -44,7 +44,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG"
 
   update-infrastructure:
-    # needs: [build-services]
+    needs: [build-services]
     runs-on: ubuntu-latest
     env:
       AWS_REGION: ap-south-1
