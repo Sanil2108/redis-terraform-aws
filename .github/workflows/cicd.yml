@@ -68,7 +68,7 @@ jobs:
 
     - name: Destroy the ec2 instances
       working-directory: ./terraform
-      run: terraform destroy -force -target="module.ec2-instance"
+      run: terraform destroy -auto-approve -target="module.ec2-instance"
 
     - name: Terraform apply infrastructure
       working-directory: ./terraform
