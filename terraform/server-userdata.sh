@@ -72,5 +72,11 @@ services:
 ' > /home/ec2-user/docker-compose.yml
 echo "Saved docker compose"
 
+# Setup aws and ecr
+export AWS_REGION=$AWS_REGION
+export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 067237244850.dkr.ecr.ap-south-1.amazonaws.com
+
 # Run the docker-compose.yml
 sudo docker-compose -f /home/ec2-user/docker-compose.yml up -d
