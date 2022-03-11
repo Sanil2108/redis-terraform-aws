@@ -40,16 +40,16 @@ jobs:
         docker push $ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG"
 
-  update-infrastructure:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Init terraform
+  # update-infrastructure:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Init terraform
 
-    - name: Print terraform plan
+  #   - name: Print terraform plan
 
-    - name: Apply the infrastructure
+  #   - name: Apply the infrastructure
 
-    - name: Destroy the EC2 resources
+  #   - name: Destroy the EC2 resources
 
-    - name: Create the EC2 resources
+  #   - name: Create the EC2 resources
 
