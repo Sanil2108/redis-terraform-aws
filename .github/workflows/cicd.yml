@@ -46,11 +46,7 @@ jobs:
   update-infrastructure:
     needs: [build-services]
     runs-on: ubuntu-latest
-    env:
-      AWS_REGION: ap-south-1
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -65,6 +61,10 @@ jobs:
     - name: Plan terraform
       working-directory: ./terraform
       run: terraform plan
+      env:
+        AWS_REGION: ap-south-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Destroy the ec2 instances
       working-directory: ./terraform
