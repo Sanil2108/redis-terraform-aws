@@ -44,6 +44,7 @@ jobs:
         echo "::set-output name=image::$ECR_REGISTRY/$REDIS_NODE_REPOSITORY:$IMAGE_TAG"
 
   update-infrastructure:
+    needs: [build-services]
     runs-on: ubuntu-latest
     env:
       AWS_REGION: ap-south-1
@@ -62,7 +63,9 @@ jobs:
       run: terraform init
 
     - name: Destroy the ec2 instances
+      working-directory: ./terraform
       run: terraform destroy -target="module.ec2-instance"
 
     - name: Terraform apply infrastructure
+      working-directory: ./terraform
       run: terraform apply -auto-approve
