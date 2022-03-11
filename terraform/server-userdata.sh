@@ -19,49 +19,42 @@ version: "3.3"
 services:
   master0:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6079
-
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6079
   replica0:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6080
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6080
     depends_on:
       - master0
 
   master1:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6179
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6179
     
   replica1:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6180
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6180
     depends_on:
       - master1
 
   master2:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6279
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6279
 
   replica2:
     network_mode: host
-    build:
-      context: ./redisnode
-      args:
-        - REDIS_PORT=6280
+    image: 067237244850.dkr.ecr.ap-south-1.amazonaws.com/redis-node:latest
+    environment:
+      - REDIS_PORT=6280
     depends_on:
       - master2
 

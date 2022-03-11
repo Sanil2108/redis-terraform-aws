@@ -1,7 +1,5 @@
 FROM redis:6.2
 
-ARG REDIS_PORT
-
 WORKDIR /redis-workdir
 
 # Installing OS level dependencies
@@ -15,8 +13,4 @@ RUN mv redis.conf redis.default.conf
 
 COPY . .
 
-ENV REDIS_PORT $REDIS_PORT
-RUN envsubst < redis.conf > updated_redis.conf
-RUN mv updated_redis.conf redis.conf
-
-CMD redis-server ./redis.conf
+CMD envsubst < redis.conf > updated_redis.conf && redis-server ./updated_redis.conf
